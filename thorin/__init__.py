@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import os
 import sys
 import json
@@ -80,8 +78,4 @@ class BotTest(Bot):
         message = Message(0, None, None, None, text=msg)
         return message
 
-        
 
-if __name__ == "__main__":
-    bot = Bot("@Thorin_Bot", os.getenv("THORIN_API_TOKEN"))
-    bot.run()
