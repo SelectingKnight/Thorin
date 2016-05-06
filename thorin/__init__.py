@@ -10,19 +10,17 @@ from telegram.ext import Updater, MessageHandler, Message
 class Bot:
     inventory = {}
 
-    def __init__(self, name, backend):
+    def __init__(self, name, backendName):
+        mod = importlib.import_module('backends.'+backendName)
         print("Booting systems...")
         print("Hello my name is " + name + "...")
         self.backend.onMessage(self.parse_message)
-        if isfile("./inventory.json"):
+        if isfile(os.path("inventory.json")):
             print("Loading my inventory from last time...")
             self.__load_inventory()
 
     def run(self):
-        # self.start_scheduled_scripts()
-        print("I am listening for messages...")
-        self.updater.start_polling()
-        self.updater.idle()
+        self.backend.start():
 
     # potentially destructive function so we attempt to privatize it
     def __load_inventory(self):
@@ -47,7 +45,7 @@ class Bot:
                 backend.sendMessage(chat_id, text=reply)
             except:
                 print("Unexpected error:", sys.exc_info()[0])
-                bot.sendMessage(chat_id, text="Sorry I had an errorerrorerrorerror")
+                backend.sendMessage(chat_id, text="Sorry I had an errorerrorerrorerror")
 
     def run_command(self, command, incoming):
         reply = ""
